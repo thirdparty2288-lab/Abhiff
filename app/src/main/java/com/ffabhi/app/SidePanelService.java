@@ -44,7 +44,7 @@ public class SidePanelService extends Service {
             PixelFormat.TRANSLUCENT
         );
         handleParams.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
-        handleParams.x = 0;
+        handleParams.x = 30;
 
         handleView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -182,4 +182,4 @@ public class SidePanelService extends Service {
         if (handleView != null) windowManager.removeView(handleView);
         if (panelView != null) windowManager.removeView(panelView);
     }
-          }
+                              }
