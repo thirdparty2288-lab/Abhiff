@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="🎮 FF Abhi v1.0"
+        android:text="🎮 FF Abhi v2.0"
         android:textColor="#00FF88"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -46,7 +46,17 @@
         android:textSize="18sp"
         android:padding="8dp"
         android:background="#1A1A1A"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btnSidePanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="📌 Side Panel ON Karo"
+        android:background="#00FF88"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
 
     <Button
         android:id="@+id/btnAddGame"
