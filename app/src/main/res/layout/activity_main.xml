@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#0D0D0D"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🎮 FF Abhi v1.0"
+        android:textColor="#00FF88"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"/>
+
+    <TextView
+        android:id="@+id/tvPing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Ping: -- ms"
+        android:textColor="#00FF88"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:background="#1A1A1A"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvBattery"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Battery: --% | Temp: --°C"
+        android:textColor="#00FF88"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:background="#1A1A1A"
+        android:layout_marginBottom="4dp"/>
+
+    <TextView
+        android:id="@+id/tvRam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="RAM: -- MB used"
+        android:textColor="#00FF88"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:background="#1A1A1A"
+        android:layout_marginBottom="20dp"/>
+
+    <Button
+        android:id="@+id/btnAddGame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="+ Games Add Karo"
+        android:background="#00FF88"
+        android:textColor="#000000"
+        android:textStyle="bold"
+        android:layout_marginBottom="8dp"/>
+
+    <ListView
+        android:id="@+id/listGames"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#1A1A1A"
+        android:layout_marginBottom="16dp"/>
+
+    <Switch
+        android:id="@+id/swDnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Game Mode (DND)"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="4dp"/>
+
+    <Switch
+        android:id="@+id/swBrightness"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Brightness Boost"
+        android:textColor="#FFFFFF"
+        android:layout_marginBottom="4dp"/>
+
+</LinearLayout>
