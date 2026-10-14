@@ -18,7 +18,7 @@ import java.util.HashSet;
 public class MainActivity extends Activity {
 
     ListView listGames;
-    Button btnAddGame;
+    Button btnAddGame, btnSidePanel;
     Switch swDnd, swBrightness;
     TextView tvPing, tvBattery, tvRam;
     ArrayList<String> gamesList;
@@ -33,6 +33,7 @@ public class MainActivity extends Activity {
 
         listGames = findViewById(R.id.listGames);
         btnAddGame = findViewById(R.id.btnAddGame);
+        btnSidePanel = findViewById(R.id.btnSidePanel);
         swDnd = findViewById(R.id.swDnd);
         swBrightness = findViewById(R.id.swBrightness);
         tvPing = findViewById(R.id.tvPing);
@@ -43,6 +44,17 @@ public class MainActivity extends Activity {
         gamesList = new ArrayList<>(prefs.getStringSet("games", new HashSet<>()));
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, gamesList);
         listGames.setAdapter(adapter);
+
+        btnSidePanel.setOnClickListener(v -> {
+            if (!Settings.canDrawOverlays(this)) {
+                startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + getPackageName())));
+                Toast.makeText(this, "Overlay permission do, phir dobara try karo", Toast.LENGTH_LONG).show();
+            } else {
+                startService(new Intent(this, SidePanelService.class));
+                Toast.makeText(this, "Side Panel ON ho gaya!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btnAddGame.setOnClickListener(v -> {
             EditText input = new EditText(this);
@@ -129,4 +141,4 @@ public class MainActivity extends Activity {
 
         handler.postDelayed(this::updateStats, 3000);
     }
-                       }
+            }
