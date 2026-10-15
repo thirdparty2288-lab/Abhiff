@@ -2,6 +2,7 @@ package com.ffabhi.app;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.os.BatteryManager;
@@ -28,6 +29,7 @@ public class SidePanelService extends Service {
     private boolean isPanelOpen = false;
     private Handler handler = new Handler();
     private float initialX;
+    private float initialY;
 
     @Override
     public IBinder onBind(Intent intent) { return null; }
@@ -39,21 +41,32 @@ public class SidePanelService extends Service {
 
         handleView = LayoutInflater.from(this).inflate(R.layout.handle_layout, null);
         WindowManager.LayoutParams handleParams = new WindowManager.LayoutParams(
-            12, 200,
+            70, 320,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
             PixelFormat.TRANSLUCENT
         );
         handleParams.gravity = Gravity.LEFT | Gravity.TOP;
-        handleParams.y = 300;
+        handleParams.x = 30;
+        handleParams.y = 120;
 
         handleView.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     initialX = event.getRawX();
+                    initialY = event.getRawY();
                     return true;
                 case MotionEvent.ACTION_MOVE:
-                    if (event.getRawX() - initialX > 80 && !isPanelOpen) {
+                    float dx = event.getRawX() - initialX;
+                    float dy = Math.abs(event.getRawY() - initialY);
+                    if (dx > 40 && dy < 120 && !isPanelOpen) {
+                        openPanel();
+                    }
+                    return true;
+                case MotionEvent.ACTION_UP:
+                    if (Math.abs(event.getRawX() - initialX) < 20 && !isPanelOpen) {
                         openPanel();
                     }
                     return true;
@@ -72,21 +85,38 @@ public class SidePanelService extends Service {
         panelView = LayoutInflater.from(this).inflate(R.layout.panel_layout, null);
         WindowManager.LayoutParams panelParams = new WindowManager.LayoutParams(
             600,
-            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.WRAP_CONTENT,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
             PixelFormat.TRANSLUCENT
         );
-        panelParams.gravity = Gravity.LEFT;
+        panelParams.gravity = Gravity.LEFT | Gravity.TOP;
+        panelParams.x = 30;
+        panelParams.y = 80;
+
+        panelView.setOnTouchListener((v, event) -> {
+            if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                closePanel();
+                return true;
+            }
+            return false;
+        });
 
         SeekBar brightnessSlider = panelView.findViewById(R.id.brightnessSlider);
+        TextView brightnessValue = panelView.findViewById(R.id.brightnessValue);
         try {
             int currentBrightness = Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS);
             brightnessSlider.setProgress(currentBrightness);
+            int percent = (int) ((currentBrightness / 255.0) * 100);
+            brightnessValue.setText(percent + "%");
         } catch (Exception e) {}
         brightnessSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int percent = (int) ((progress / 255.0) * 100);
+                brightnessValue.setText(percent + "%");
                 if (fromUser && Settings.System.canWrite(SidePanelService.this)) {
                     Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, progress);
                 }
@@ -96,12 +126,17 @@ public class SidePanelService extends Service {
         });
 
         SeekBar volumeSlider = panelView.findViewById(R.id.volumeSlider);
+        TextView volumeValue = panelView.findViewById(R.id.volumeValue);
         AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
-        volumeSlider.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
-        volumeSlider.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+        int maxVol = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        int curVol = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        volumeSlider.setMax(maxVol);
+        volumeSlider.setProgress(curVol);
+        volumeValue.setText((int) ((curVol / (float) maxVol) * 100) + "%");
         volumeSlider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                volumeValue.setText((int) ((progress / (float) maxVol) * 100) + "%");
                 if (fromUser) {
                     audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, progress, 0);
                 }
@@ -129,7 +164,7 @@ public class SidePanelService extends Service {
 
         btnClean.setEnabled(false);
         progress.setProgress(0);
-        status.setText("🧹 Cleaning...");
+        status.setText("Cleaning...");
 
         final int[] progressValue = {0};
         Handler animHandler = new Handler();
@@ -142,7 +177,7 @@ public class SidePanelService extends Service {
                     animHandler.postDelayed(this, 100);
                 } else {
                     performRamClean();
-                    status.setText("✅ RAM Cleaned!");
+                    status.setText("RAM Cleaned!");
                     btnClean.setEnabled(true);
 
                     android.app.ActivityManager am = (android.app.ActivityManager) getSystemService(ACTIVITY_SERVICE);
@@ -152,7 +187,7 @@ public class SidePanelService extends Service {
 
                     handler.postDelayed(() -> {
                         if (panelView != null) {
-                            status.setText("🧹 RAM Cleaner");
+                            status.setText("RAM Cleaner");
                             progress.setProgress(0);
                         }
                     }, 2000);
@@ -215,9 +250,15 @@ public class SidePanelService extends Service {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (isPanelOpen) closePanel();
+    }
+
+    @Override
     public void onDestroy() {
         super.onDestroy();
         if (handleView != null) windowManager.removeView(handleView);
         if (panelView != null) windowManager.removeView(panelView);
     }
-                    }
+            }
