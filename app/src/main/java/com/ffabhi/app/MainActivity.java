@@ -166,6 +166,13 @@ public class MainActivity extends Activity {
             }
         }
 
+        if (settingsPrefs.getBoolean("game_focus", false)) {
+            try {
+                startLockTask();
+                Toast.makeText(this, "🎮 Game Focus ON!", Toast.LENGTH_SHORT).show();
+            } catch (Exception e) {}
+        }
+
         if (Settings.canDrawOverlays(this)) {
             startService(new Intent(this, SidePanelService.class));
         }
@@ -214,4 +221,4 @@ public class MainActivity extends Activity {
 
         handler.postDelayed(this::updateStats, 3000);
     }
-                                              }
+                    }
