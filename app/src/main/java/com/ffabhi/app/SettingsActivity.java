@@ -7,8 +7,10 @@ import android.widget.*;
 
 public class SettingsActivity extends Activity {
 
-    RadioGroup rgPosition, rgSize, rgColor;
-    Switch swAutoDnd, swAutoBrightness, swAutoRam;
+    SeekBar seekPosX, seekPosY, seekWidth, seekHeight;
+    TextView tvPosX, tvPosY, tvWidth, tvHeight;
+    RadioGroup rgColor;
+    Switch swAutoDnd, swAutoBrightness, swAutoRam, swGameFocus;
     Button btnSave;
     SharedPreferences prefs;
 
@@ -19,22 +21,29 @@ public class SettingsActivity extends Activity {
 
         prefs = getSharedPreferences("ffabhi_settings", MODE_PRIVATE);
 
-        rgPosition = findViewById(R.id.rgPosition);
-        rgSize = findViewById(R.id.rgSize);
+        seekPosX = findViewById(R.id.seekPosX);
+        seekPosY = findViewById(R.id.seekPosY);
+        seekWidth = findViewById(R.id.seekWidth);
+        seekHeight = findViewById(R.id.seekHeight);
+        tvPosX = findViewById(R.id.tvPosX);
+        tvPosY = findViewById(R.id.tvPosY);
+        tvWidth = findViewById(R.id.tvWidth);
+        tvHeight = findViewById(R.id.tvHeight);
         rgColor = findViewById(R.id.rgColor);
         swAutoDnd = findViewById(R.id.swAutoDnd);
         swAutoBrightness = findViewById(R.id.swAutoBrightness);
         swAutoRam = findViewById(R.id.swAutoRam);
+        swGameFocus = findViewById(R.id.swGameFocus);
         btnSave = findViewById(R.id.btnSaveSettings);
 
-        String pos = prefs.getString("dandi_position", "left");
-        if (pos.equals("right")) rgPosition.check(R.id.rbRight);
-        else rgPosition.check(R.id.rbLeft);
-
-        String size = prefs.getString("dandi_size", "medium");
-        if (size.equals("small")) rgSize.check(R.id.rbSmall);
-        else if (size.equals("large")) rgSize.check(R.id.rbLarge);
-        else rgSize.check(R.id.rbMedium);
+        seekPosX.setProgress(prefs.getInt("dandi_x", 20));
+        seekPosY.setProgress(prefs.getInt("dandi_y", 300));
+        seekWidth.setProgress(prefs.getInt("dandi_width", 20));
+        seekHeight.setProgress(prefs.getInt("dandi_height", 200));
+        tvPosX.setText(String.valueOf(prefs.getInt("dandi_x", 20)));
+        tvPosY.setText(String.valueOf(prefs.getInt("dandi_y", 300)));
+        tvWidth.setText(String.valueOf(prefs.getInt("dandi_width", 20)));
+        tvHeight.setText(String.valueOf(prefs.getInt("dandi_height", 200)));
 
         String color = prefs.getString("dandi_color", "green");
         if (color.equals("blue")) rgColor.check(R.id.rbBlue);
@@ -44,21 +53,38 @@ public class SettingsActivity extends Activity {
         swAutoDnd.setChecked(prefs.getBoolean("auto_dnd", true));
         swAutoBrightness.setChecked(prefs.getBoolean("auto_brightness", true));
         swAutoRam.setChecked(prefs.getBoolean("auto_ram", true));
+        swGameFocus.setChecked(prefs.getBoolean("game_focus", false));
+
+        seekPosX.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar s, int p, boolean u) { tvPosX.setText(String.valueOf(p)); }
+            public void onStartTrackingTouch(SeekBar s) {}
+            public void onStopTrackingTouch(SeekBar s) {}
+        });
+
+        seekPosY.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar s, int p, boolean u) { tvPosY.setText(String.valueOf(p)); }
+            public void onStartTrackingTouch(SeekBar s) {}
+            public void onStopTrackingTouch(SeekBar s) {}
+        });
+
+        seekWidth.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar s, int p, boolean u) { tvWidth.setText(String.valueOf(p)); }
+            public void onStartTrackingTouch(SeekBar s) {}
+            public void onStopTrackingTouch(SeekBar s) {}
+        });
+
+        seekHeight.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            public void onProgressChanged(SeekBar s, int p, boolean u) { tvHeight.setText(String.valueOf(p)); }
+            public void onStartTrackingTouch(SeekBar s) {}
+            public void onStopTrackingTouch(SeekBar s) {}
+        });
 
         btnSave.setOnClickListener(v -> {
             SharedPreferences.Editor editor = prefs.edit();
-
-            if (rgPosition.getCheckedRadioButtonId() == R.id.rbRight)
-                editor.putString("dandi_position", "right");
-            else
-                editor.putString("dandi_position", "left");
-
-            if (rgSize.getCheckedRadioButtonId() == R.id.rbSmall)
-                editor.putString("dandi_size", "small");
-            else if (rgSize.getCheckedRadioButtonId() == R.id.rbLarge)
-                editor.putString("dandi_size", "large");
-            else
-                editor.putString("dandi_size", "medium");
+            editor.putInt("dandi_x", seekPosX.getProgress());
+            editor.putInt("dandi_y", seekPosY.getProgress());
+            editor.putInt("dandi_width", seekWidth.getProgress());
+            editor.putInt("dandi_height", seekHeight.getProgress());
 
             if (rgColor.getCheckedRadioButtonId() == R.id.rbBlue)
                 editor.putString("dandi_color", "blue");
@@ -70,10 +96,11 @@ public class SettingsActivity extends Activity {
             editor.putBoolean("auto_dnd", swAutoDnd.isChecked());
             editor.putBoolean("auto_brightness", swAutoBrightness.isChecked());
             editor.putBoolean("auto_ram", swAutoRam.isChecked());
+            editor.putBoolean("game_focus", swGameFocus.isChecked());
             editor.apply();
 
             Toast.makeText(this, "Settings Save Ho Gayi!", Toast.LENGTH_SHORT).show();
             finish();
         });
     }
-}
+                }
