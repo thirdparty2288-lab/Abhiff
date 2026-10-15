@@ -1,180 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
     android:layout_height="match_parent"
-    android:background="#050505">
+    android:orientation="vertical"
+    android:background="#1A1A1A"
+    android:padding="16dp">
 
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="X-BOOST"
+            android:textColor="#00FF88"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/fpsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="60 FPS"
+            android:textColor="#00FF88"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+    <!-- CPU/GPU CIRCLES -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="20dp">
+
+        <LinearLayout
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#222222"
+            android:layout_marginRight="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CPU"
+                android:textColor="#AAAAAA"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/cpuText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textColor="#00FF88"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="#222222"
+            android:layout_marginLeft="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="GPU"
+                android:textColor="#AAAAAA"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/gpuText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0%"
+                android:textColor="#00FF88"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- STATS -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="14dp">
+        android:background="#222222"
+        android:padding="12dp"
+        android:layout_marginBottom="12dp">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/panelPing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:background="#0A0A0A"
-            android:padding="14dp"
-            android:layout_marginBottom="14dp">
+            android:text="Ping: -- ms"
+            android:textColor="#00FF88"
+            android:textSize="14sp"
+            android:padding="6dp"
+            android:layout_marginBottom="4dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🔥"
-                android:textSize="26sp"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginLeft="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="FF ABHI"
-                    android:textColor="#FF3300"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.15"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="FIRE PANEL"
-                    android:textColor="#00AAFF"
-                    android:textSize="8sp"
-                    android:letterSpacing="0.4"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/panelBattery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#0A0A0A"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp">
+            android:text="Battery: --% | Temp: --°C"
+            android:textColor="#00FF88"
+            android:textSize="14sp"
+            android:padding="6dp"/>
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🔥 LIVE STATS"
-                android:textColor="#FF3300"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.3"
-                android:layout_marginBottom="8dp"/>
+    <!-- RAM CLEANER WITH ANIMATION -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="#222222"
+        android:padding="16dp"
+        android:layout_marginBottom="12dp">
 
-            <TextView
-                android:id="@+id/panelPing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="📶 -- ms"
-                android:textColor="#00AAFF"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:padding="10dp"
-                android:background="#111111"
-                android:layout_marginBottom="6dp"/>
-
-            <TextView
-                android:id="@+id/panelBattery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="🔋 --% | --°C"
-                android:textColor="#FF3300"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:padding="10dp"
-                android:background="#111111"
-                android:layout_marginBottom="6dp"/>
-
-            <TextView
-                android:id="@+id/panelRam"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="📊 -- MB"
-                android:textColor="#00AAFF"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:padding="10dp"
-                android:background="#111111"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/cleanStatus"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#0A0A0A"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp">
+            android:text="🧹 RAM Cleaner"
+            android:textColor="#00FF88"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="8dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="☀️ BRIGHTNESS"
-                android:textColor="#FFFFFF"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.3"
-                android:layout_marginBottom="8dp"/>
-
-            <SeekBar
-                android:id="@+id/brightnessSlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="255"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <ProgressBar
+            android:id="@+id/cleanProgress"
+            style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:max="100"
+            android:progress="0"
+            android:progressTint="#00FF88"
+            android:layout_marginBottom="12dp"/>
+
+        <TextView
+            android:id="@+id/ramInfo"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#0A0A0A"
-            android:padding="12dp"
-            android:layout_marginBottom="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="🔊 VOLUME"
-                android:textColor="#FFFFFF"
-                android:textSize="10sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.3"
-                android:layout_marginBottom="8dp"/>
-
-            <SeekBar
-                android:id="@+id/volumeSlider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:max="15"/>
-        </LinearLayout>
+            android:text="RAM: -- MB used"
+            android:textColor="#AAAAAA"
+            android:textSize="12sp"
+            android:layout_marginBottom="8dp"/>
 
         <Button
             android:id="@+id/btnCleanRam"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:text="🔥 RAM CLEAN"
-            android:background="#FF3300"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:letterSpacing="0.15"
-            android:layout_marginBottom="8dp"/>
-
-        <Button
-            android:id="@+id/btnClosePanel"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:text="❌ PANEL BAND"
-            android:background="#00AAFF"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:letterSpacing="0.15"/>
+            android:layout_height="48dp"
+            android:text="🧹 RAM CLEAN KARO"
+            android:background="#00FF88"
+            android:textColor="#000000"
+            android:textStyle="bold"/>
 
     </LinearLayout>
-</ScrollView>
+
+    <!-- BRIGHTNESS -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="☀️ Brightness"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:layout_marginBottom="4dp"/>
+
+    <SeekBar
+        android:id="@+id/brightnessSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="255"
+        android:layout_marginBottom="12dp"/>
+
+    <!-- VOLUME -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🔊 Volume"
+        android:textColor="#FFFFFF"
+        android:textSize="11sp"
+        android:layout_marginBottom="4dp"/>
+
+    <SeekBar
+        android:id="@+id/volumeSlider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="15"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- CLOSE BUTTON -->
+    <Button
+        android:id="@+id/btnClosePanel"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="✕ CLOSE"
+        android:background="#FF4444"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"/>
+
+</LinearLayout>
