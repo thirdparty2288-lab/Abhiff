@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<View xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="12dp"
-    android:layout_height="200dp"
-    android:background="#00FF88"
-    android:alpha="0.9"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="18dp"
+    android:layout_height="220dp"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#E0E0E0"
+    android:alpha="0.95">
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="6dp"/>
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="40dp"
+        android:background="#888888"
+        android:layout_marginBottom="6dp"/>
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="40dp"
+        android:background="#FFFFFF"
+        android:layout_marginBottom="6dp"/>
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="40dp"
+        android:background="#888888"/>
+
+</LinearLayout>
