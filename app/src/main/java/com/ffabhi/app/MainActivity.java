@@ -20,7 +20,7 @@ public class MainActivity extends Activity {
     ListView listGames;
     Button btnAddGame, btnSidePanel;
     Switch swDnd, swBrightness;
-    TextView tvPing, tvBattery, tvRam;
+    TextView tvPing, tvBattery, tvRam, btnSettings;
     ArrayList<String> gamesList;
     ArrayAdapter<String> adapter;
     SharedPreferences prefs;
@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
         listGames = findViewById(R.id.listGames);
         btnAddGame = findViewById(R.id.btnAddGame);
         btnSidePanel = findViewById(R.id.btnSidePanel);
+        btnSettings = findViewById(R.id.btnSettings);
         swDnd = findViewById(R.id.swDnd);
         swBrightness = findViewById(R.id.swBrightness);
         tvPing = findViewById(R.id.tvPing);
@@ -45,6 +46,10 @@ public class MainActivity extends Activity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, gamesList);
         listGames.setAdapter(adapter);
 
+        btnSettings.setOnClickListener(v -> {
+            Toast.makeText(this, "Settings coming soon!", Toast.LENGTH_SHORT).show();
+        });
+
         btnSidePanel.setOnClickListener(v -> {
             if (!Settings.canDrawOverlays(this)) {
                 startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
@@ -52,7 +57,7 @@ public class MainActivity extends Activity {
                 Toast.makeText(this, "Overlay permission do, phir dobara try karo", Toast.LENGTH_LONG).show();
             } else {
                 startService(new Intent(this, SidePanelService.class));
-                Toast.makeText(this, "Side Panel ON ho gaya!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "🔥 Side Panel ON ho gaya!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -137,8 +142,8 @@ public class MainActivity extends Activity {
         android.app.ActivityManager am = (android.app.ActivityManager) getSystemService(ACTIVITY_SERVICE);
         android.app.ActivityManager.MemoryInfo mi = new android.app.ActivityManager.MemoryInfo();
         am.getMemoryInfo(mi);
-        tvRam.setText("RAM: " + ((mi.totalMem - mi.availMem) / (1024 * 1024)) + " MB used");
+        tvRam.setText("RAM: " + ((mi.totalMem - mi.availMem) / (1024 * 1024)) + " MB");
 
         handler.postDelayed(this::updateStats, 3000);
     }
-            }
+                }
