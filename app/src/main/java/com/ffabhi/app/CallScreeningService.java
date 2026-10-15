@@ -1,9 +1,8 @@
 package com.ffabhi.app;
 
 import android.telecom.Call;
-import android.telecom.CallScreeningService;
 
-public class CallScreeningService extends CallScreeningService {
+public class CallScreeningService extends android.telecom.CallScreeningService {
     @Override
     public void onScreenCall(Call.Details callDetails) {
         CallResponse.Builder response = new CallResponse.Builder();
