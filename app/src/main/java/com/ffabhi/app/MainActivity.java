@@ -19,6 +19,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import rikka.shizuku.Shizuku;
+
 public class MainActivity extends Activity {
 
     ListView listGames;
@@ -29,6 +31,8 @@ public class MainActivity extends Activity {
     ArrayAdapter<String> adapter;
     SharedPreferences prefs, settingsPrefs;
     Handler handler = new Handler();
+
+    private static final int SHIZUKU_PERMISSION_REQUEST = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,9 @@ public class MainActivity extends Activity {
         gamesList = new ArrayList<>(prefs.getStringSet("games", new HashSet<>()));
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, gamesList);
         listGames.setAdapter(adapter);
+
+        // Shizuku permission request
+        requestShizukuPermission();
 
         btnSettings.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
@@ -108,6 +115,29 @@ public class MainActivity extends Activity {
         });
 
         updateStats();
+    }
+
+    private void requestShizukuPermission() {
+        try {
+            if (Shizuku.isPreV11() || Shizuku.getVersion() < 11) {
+                return;
+            }
+            if (Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
+                Shizuku.requestPermission(SHIZUKU_PERMISSION_REQUEST);
+            }
+        } catch (Exception e) {}
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == SHIZUKU_PERMISSION_REQUEST) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "✅ Shizuku Permission Mili!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "❌ Shizuku Permission Nahi Mili", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void showAppSelector() {
@@ -221,4 +251,4 @@ public class MainActivity extends Activity {
 
         handler.postDelayed(this::updateStats, 3000);
     }
-                    }
+    }
