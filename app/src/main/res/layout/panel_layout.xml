@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="#0A0A0A"
+    android:background="#CC0D0D0D"
     android:maxHeight="600dp">
 
     <LinearLayout
@@ -11,116 +11,104 @@
         android:orientation="vertical"
         android:padding="12dp">
 
-        <!-- HEADER -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@drawable/rounded_bg"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/panelPing"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="📶 -- ms"
+                android:textColor="#00FF88"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/panelTemp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="🌡️ --°C"
+                android:textColor="#00FF88"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_vertical"
-            android:background="#111111"
-            android:padding="12dp"
+            android:background="@drawable/fps_bg"
+            android:padding="14dp"
             android:layout_marginBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="⚡"
-                android:textSize="20sp"/>
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="X-BOOST"
-                android:textColor="#00FF88"
-                android:textSize="15sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.15"
-                android:layout_marginLeft="8dp"/>
+                android:text="📊"
+                android:textSize="24sp"/>
 
             <TextView
                 android:id="@+id/fpsText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-- FPS"
+                android:textColor="#00FF88"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"/>
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="60 FPS"
-                android:textColor="#00FF88"
-                android:textSize="11sp"
-                android:background="#1A1A1A"
-                android:padding="6dp"/>
+                android:text="60"
+                android:textColor="#444444"
+                android:textSize="12sp"/>
         </LinearLayout>
 
-        <!-- CPU / GPU -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="10dp">
 
-            <LinearLayout
+            <Button
+                android:id="@+id/btnLowPower"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="#111111"
-                android:padding="14dp"
-                android:layout_marginRight="5dp">
+                android:text="Low Power Mode"
+                android:textSize="10sp"
+                android:background="@drawable/mode_button_bg"
+                android:textColor="#AAAAAA"
+                android:layout_marginRight="4dp"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CPU"
-                    android:textColor="#666666"
-                    android:textSize="9sp"/>
-
-                <TextView
-                    android:id="@+id/cpuText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0%"
-                    android:textColor="#00FF88"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
-
-            <LinearLayout
+            <Button
+                android:id="@+id/btnBalanced"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:background="#111111"
-                android:padding="14dp"
-                android:layout_marginLeft="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="GPU"
-                    android:textColor="#666666"
-                    android:textSize="9sp"/>
-
-                <TextView
-                    android:id="@+id/gpuText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="0%"
-                    android:textColor="#00FF88"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
+                android:text="Balanced Mode"
+                android:textSize="10sp"
+                android:background="@drawable/mode_button_bg"
+                android:textColor="#00FF88"
+                android:layout_marginLeft="4dp"/>
         </LinearLayout>
 
-        <!-- BRIGHTNESS (CPU/GPU ke just neeche) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#111111"
-            android:padding="12dp"
-            android:layout_marginBottom="6dp">
+            android:background="@drawable/rounded_bg"
+            android:padding="10dp"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,10 +126,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="BRIGHTNESS"
-                    android:textColor="#666666"
-                    android:textSize="9sp"
-                    android:textStyle="bold"
+                    android:text="Brightness"
+                    android:textColor="#AAAAAA"
+                    android:textSize="11sp"
                     android:layout_marginLeft="8dp"/>
 
                 <TextView
@@ -160,17 +147,16 @@
                 android:layout_height="wrap_content"
                 android:max="255"
                 android:progressTint="#00FF88"
-                android:progressBackgroundTint="#222222"
+                android:progressBackgroundTint="#2A2A2A"
                 android:thumbTint="#00FF88"/>
         </LinearLayout>
 
-        <!-- VOLUME (Brightness ke neeche) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#111111"
-            android:padding="12dp"
+            android:background="@drawable/rounded_bg"
+            android:padding="10dp"
             android:layout_marginBottom="10dp">
 
             <LinearLayout
@@ -189,10 +175,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="VOLUME"
-                    android:textColor="#666666"
-                    android:textSize="9sp"
-                    android:textStyle="bold"
+                    android:text="Volume"
+                    android:textColor="#AAAAAA"
+                    android:textSize="11sp"
                     android:layout_marginLeft="8dp"/>
 
                 <TextView
@@ -200,7 +185,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="50%"
-                    android:textColor="#00AAFF"
+                    android:textColor="#00FF88"
                     android:textSize="11sp"
                     android:textStyle="bold"/>
             </LinearLayout>
@@ -210,116 +195,70 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:max="15"
-                android:progressTint="#00AAFF"
-                android:progressBackgroundTint="#222222"
-                android:thumbTint="#00AAFF"/>
+                android:progressTint="#00FF88"
+                android:progressBackgroundTint="#2A2A2A"
+                android:thumbTint="#00FF88"/>
         </LinearLayout>
 
-        <!-- PERFORMANCE MODES -->
-        <LinearLayout
+        <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#111111"
-            android:padding="6dp"
+            android:columnCount="2"
+            android:rowCount="2"
             android:layout_marginBottom="10dp">
 
             <Button
-                android:id="@+id/btnPowerSave"
+                android:id="@+id/btnGameFocus"
                 android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:text="SAVE"
-                android:textSize="8sp"
-                android:textStyle="bold"
-                android:background="#1A1A1A"
-                android:textColor="#666666"
-                android:layout_marginRight="3dp"/>
+                android:layout_height="70dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:text="🎮 Game Focus"
+                android:textSize="11sp"
+                android:background="@drawable/tile_bg"
+                android:textColor="#00FF88"/>
 
             <Button
-                android:id="@+id/btnBalanced"
+                android:id="@+id/btnNotifications"
                 android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:text="BALANCED"
-                android:textSize="8sp"
-                android:textStyle="bold"
-                android:background="#00FF88"
-                android:textColor="#000000"
-                android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"/>
+                android:layout_height="70dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:text="🔔 Notifications"
+                android:textSize="11sp"
+                android:background="@drawable/tile_bg"
+                android:textColor="#00FF88"/>
 
             <Button
-                android:id="@+id/btnPerformance"
+                android:id="@+id/btnCallBlocker"
                 android:layout_width="0dp"
-                android:layout_height="36dp"
-                android:layout_weight="1"
-                android:text="PERF"
-                android:textSize="8sp"
-                android:textStyle="bold"
-                android:background="#1A1A1A"
-                android:textColor="#666666"
-                android:layout_marginLeft="3dp"/>
-        </LinearLayout>
+                android:layout_height="70dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:text="🚫 Call Blocker"
+                android:textSize="11sp"
+                android:background="@drawable/tile_bg"
+                android:textColor="#00FF88"/>
 
-        <!-- LIVE STATS -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="#111111"
-            android:padding="12dp"
-            android:layout_marginBottom="10dp">
+            <Button
+                android:id="@+id/btnCleanRam"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="4dp"
+                android:text="🧹 RAM Clean"
+                android:textSize="11sp"
+                android:background="@drawable/tile_bg"
+                android:textColor="#00FF88"/>
+        </GridLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LIVE STATS"
-                android:textColor="#666666"
-                android:textSize="9sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
-
-            <TextView
-                android:id="@+id/panelPing"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="📶 Ping: -- ms"
-                android:textColor="#00FF88"
-                android:textSize="12sp"
-                android:padding="8dp"
-                android:background="#1A1A1A"
-                android:layout_marginBottom="4dp"/>
-
-            <TextView
-                android:id="@+id/panelBattery"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="🔋 Battery: --% | Temp: --°C"
-                android:textColor="#00FF88"
-                android:textSize="12sp"
-                android:padding="8dp"
-                android:background="#1A1A1A"/>
-        </LinearLayout>
-
-        <!-- RAM CLEANER -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="#111111"
-            android:padding="12dp"
+            android:background="@drawable/rounded_bg"
+            android:padding="10dp"
             android:layout_marginBottom="10dp">
-
-            <TextView
-                android:id="@+id/cleanStatus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MEMORY CLEANER"
-                android:textColor="#666666"
-                android:textSize="9sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="8dp"/>
 
             <TextView
                 android:id="@+id/ramInfo"
@@ -328,7 +267,7 @@
                 android:text="RAM: -- MB used"
                 android:textColor="#AAAAAA"
                 android:textSize="11sp"
-                android:layout_marginBottom="8dp"/>
+                android:layout_marginBottom="6dp"/>
 
             <ProgressBar
                 android:id="@+id/cleanProgress"
@@ -338,26 +277,14 @@
                 android:max="100"
                 android:progress="0"
                 android:progressTint="#00FF88"
-                android:progressBackgroundTint="#222222"
-                android:layout_marginBottom="10dp"/>
-
-            <Button
-                android:id="@+id/btnCleanRam"
-                android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:text="CLEAN RAM"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:background="#00FF88"
-                android:textColor="#000000"/>
+                android:progressBackgroundTint="#2A2A2A"/>
         </LinearLayout>
 
-        <!-- CLOSE -->
         <Button
             android:id="@+id/btnClosePanel"
             android:layout_width="match_parent"
             android:layout_height="42dp"
-            android:text="✕ CLOSE PANEL"
+            android:text="✕ CLOSE"
             android:textSize="11sp"
             android:textStyle="bold"
             android:background="#FF4444"
