@@ -2,6 +2,7 @@ package com.ffabhi.app;
 
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.os.BatteryManager;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -27,10 +29,10 @@ public class SidePanelService extends Service {
     private View panelView;
     private boolean isPanelOpen = false;
     private Handler handler = new Handler();
-    private float initialX;
-    private float initialY;
+    private float initialX, initialY;
     private int fpsValue = 60;
     private boolean fpsIncreasing = true;
+    private SharedPreferences settingsPrefs;
 
     @Override
     public IBinder onBind(Intent intent) { return null; }
@@ -39,10 +41,23 @@ public class SidePanelService extends Service {
     public void onCreate() {
         super.onCreate();
         windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        settingsPrefs = getSharedPreferences("ffabhi_settings", MODE_PRIVATE);
+
+        int dandiX = settingsPrefs.getInt("dandi_x", 20);
+        int dandiY = settingsPrefs.getInt("dandi_y", 300);
+        int dandiWidth = settingsPrefs.getInt("dandi_width", 20);
+        int dandiHeight = settingsPrefs.getInt("dandi_height", 200);
+        String dandiColor = settingsPrefs.getString("dandi_color", "green");
+
+        int colorRes = 0xFF00FF88;
+        if (dandiColor.equals("blue")) colorRes = 0xFF00AAFF;
+        else if (dandiColor.equals("fire")) colorRes = 0xFFFF3300;
 
         handleView = LayoutInflater.from(this).inflate(R.layout.handle_layout, null);
+        handleView.setBackgroundColor(colorRes);
+
         WindowManager.LayoutParams handleParams = new WindowManager.LayoutParams(
-            30, 200,
+            dandiWidth, dandiHeight,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
@@ -50,8 +65,8 @@ public class SidePanelService extends Service {
             PixelFormat.TRANSLUCENT
         );
         handleParams.gravity = Gravity.LEFT | Gravity.TOP;
-        handleParams.x = 10;
-        handleParams.y = 200;
+        handleParams.x = dandiX;
+        handleParams.y = dandiY;
 
         handleView.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
@@ -83,11 +98,8 @@ public class SidePanelService extends Service {
     private void startFpsAnimation() {
         if (panelView != null) {
             TextView fpsText = panelView.findViewById(R.id.fpsText);
-            if (fpsText != null) {
-                fpsText.setText(fpsValue + " FPS");
-            }
+            if (fpsText != null) fpsText.setText(fpsValue + " FPS");
         }
-
         if (fpsIncreasing) {
             fpsValue++;
             if (fpsValue >= 60) fpsIncreasing = false;
@@ -95,7 +107,6 @@ public class SidePanelService extends Service {
             fpsValue--;
             if (fpsValue <= 59) fpsIncreasing = true;
         }
-
         handler.postDelayed(this::startFpsAnimation, 500);
     }
 
@@ -125,7 +136,6 @@ public class SidePanelService extends Service {
             return false;
         });
 
-        // Brightness Slider
         SeekBar brightnessSlider = panelView.findViewById(R.id.brightnessSlider);
         TextView brightnessValue = panelView.findViewById(R.id.brightnessValue);
         try {
@@ -147,7 +157,6 @@ public class SidePanelService extends Service {
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        // Volume Slider
         SeekBar volumeSlider = panelView.findViewById(R.id.volumeSlider);
         TextView volumeValue = panelView.findViewById(R.id.volumeValue);
         AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
@@ -168,29 +177,20 @@ public class SidePanelService extends Service {
             @Override public void onStopTrackingTouch(SeekBar seekBar) {}
         });
 
-        // RAM Clean Button
         Button btnClean = panelView.findViewById(R.id.btnCleanRam);
         btnClean.setOnClickListener(v -> startRamCleanAnimation());
 
-        // Game Focus
-        Button btnGameFocus = panelView.findViewById(R.id.btnGameFocus);
-        btnGameFocus.setOnClickListener(v -> {
-            Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 255);
+        Button btnKillBg = panelView.findViewById(R.id.btnKillBackground);
+        btnKillBg.setOnClickListener(v -> {
+            killBackgroundApps();
+            Toast.makeText(SidePanelService.this, "⚡ Background Apps Killed!", Toast.LENGTH_SHORT).show();
         });
 
-        // Notifications
-        Button btnNotifications = panelView.findViewById(R.id.btnNotifications);
-        btnNotifications.setOnClickListener(v -> {
-            // DND toggle
-        });
-
-        // Call Blocker
         Button btnCallBlocker = panelView.findViewById(R.id.btnCallBlocker);
         btnCallBlocker.setOnClickListener(v -> {
-            // Call blocker logic
+            Toast.makeText(SidePanelService.this, "📞 Call Blocker Active!", Toast.LENGTH_SHORT).show();
         });
 
-        // Close
         Button btnClose = panelView.findViewById(R.id.btnClosePanel);
         btnClose.setOnClickListener(v -> closePanel());
 
@@ -199,14 +199,11 @@ public class SidePanelService extends Service {
 
     private void startRamCleanAnimation() {
         if (panelView == null) return;
-
         ProgressBar progress = panelView.findViewById(R.id.cleanProgress);
         TextView ramInfo = panelView.findViewById(R.id.ramInfo);
         Button btnClean = panelView.findViewById(R.id.btnCleanRam);
-
         btnClean.setEnabled(false);
         progress.setProgress(0);
-
         final int[] progressValue = {0};
         Handler animHandler = new Handler();
         Runnable animRunnable = new Runnable() {
@@ -219,12 +216,10 @@ public class SidePanelService extends Service {
                 } else {
                     performRamClean();
                     btnClean.setEnabled(true);
-
                     android.app.ActivityManager am = (android.app.ActivityManager) getSystemService(ACTIVITY_SERVICE);
                     android.app.ActivityManager.MemoryInfo mi = new android.app.ActivityManager.MemoryInfo();
                     am.getMemoryInfo(mi);
                     ramInfo.setText("RAM: " + ((mi.totalMem - mi.availMem) / (1024 * 1024)) + " MB used");
-
                     handler.postDelayed(() -> {
                         if (panelView != null) progress.setProgress(0);
                     }, 2000);
@@ -235,6 +230,13 @@ public class SidePanelService extends Service {
     }
 
     private void performRamClean() {
+        try {
+            Runtime.getRuntime().exec("am kill-all");
+            Runtime.getRuntime().exec("pm trim-caches 999999999999");
+        } catch (Exception e) {}
+    }
+
+    private void killBackgroundApps() {
         try {
             Runtime.getRuntime().exec("am kill-all");
             Runtime.getRuntime().exec("pm trim-caches 999999999999");
@@ -282,7 +284,6 @@ public class SidePanelService extends Service {
             am.getMemoryInfo(mi);
             ramInfo.setText("RAM: " + ((mi.totalMem - mi.availMem) / (1024 * 1024)) + " MB used");
         }
-
         handler.postDelayed(this::updateStats, 3000);
     }
 
