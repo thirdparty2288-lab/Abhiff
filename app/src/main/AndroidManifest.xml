@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"/>
 
     <application
         android:label="FF Abhi"
@@ -16,6 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".SettingsActivity"
+            android:exported="false"/>
         <service android:name=".SidePanelService"
             android:exported="false"/>
     </application>
