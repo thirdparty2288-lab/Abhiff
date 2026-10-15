@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import java.util.List;
 
@@ -34,21 +35,43 @@ public class AppListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        LinearLayout layout;
+        ImageView icon;
+        TextView name;
+
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_1, parent, false);
+            layout = new LinearLayout(context);
+            layout.setOrientation(LinearLayout.HORIZONTAL);
+            layout.setPadding(40, 30, 40, 30);
+            layout.setBackgroundColor(0xFF1A1A1A);
+            layout.setGravity(android.view.Gravity.CENTER_VERTICAL);
+
+            icon = new ImageView(context);
+            LinearLayout.LayoutParams iconParams = new LinearLayout.LayoutParams(90, 90);
+            icon.setLayoutParams(iconParams);
+
+            name = new TextView(context);
+            LinearLayout.LayoutParams nameParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+            name.setLayoutParams(nameParams);
+            name.setTextColor(0xFFFFFFFF);
+            name.setTextSize(16);
+            name.setPadding(30, 0, 0, 0);
+
+            layout.addView(icon);
+            layout.addView(name);
+        } else {
+            layout = (LinearLayout) convertView;
+            icon = (ImageView) layout.getChildAt(0);
+            name = (TextView) layout.getChildAt(1);
         }
 
         ApplicationInfo app = apps.get(position);
-        TextView tv = convertView.findViewById(android.R.id.text1);
-        tv.setText(app.loadLabel(pm).toString());
-        tv.setTextColor(0xFFFFFFFF);
-        tv.setTextSize(16);
-        tv.setPadding(20, 20, 20, 20);
-        tv.setCompoundDrawablesWithIntrinsicBounds(getAppIcon(app), null, null, null);
-        tv.setCompoundDrawablePadding(20);
-        convertView.setBackgroundColor(0xFF111111);
+        icon.setImageDrawable(getAppIcon(app));
+        name.setText(app.loadLabel(pm).toString());
 
-        return convertView;
+        return layout;
     }
 
     private Drawable getAppIcon(ApplicationInfo app) {
@@ -58,4 +81,4 @@ public class AppListAdapter extends BaseAdapter {
             return null;
         }
     }
-      }
+}
