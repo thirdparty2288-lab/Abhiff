@@ -56,8 +56,8 @@ public class MainActivity extends Activity {
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, gamesList);
         listGames.setAdapter(adapter);
 
-        // Shizuku permission request
-        requestShizukuPermission();
+        // Shizuku permission request - 1 second delay
+        handler.postDelayed(this::requestShizukuPermission, 1000);
 
         btnSettings.setOnClickListener(v -> {
             startActivity(new Intent(this, SettingsActivity.class));
@@ -120,12 +120,21 @@ public class MainActivity extends Activity {
     private void requestShizukuPermission() {
         try {
             if (Shizuku.isPreV11() || Shizuku.getVersion() < 11) {
+                Toast.makeText(this, "Shizuku purana hai, update karo", Toast.LENGTH_LONG).show();
+                return;
+            }
+            if (!Shizuku.pingBinder()) {
+                Toast.makeText(this, "Shizuku band hai, pehle start karo", Toast.LENGTH_LONG).show();
                 return;
             }
             if (Shizuku.checkSelfPermission() != PackageManager.PERMISSION_GRANTED) {
                 Shizuku.requestPermission(SHIZUKU_PERMISSION_REQUEST);
+            } else {
+                Toast.makeText(this, "✅ Shizuku already granted", Toast.LENGTH_SHORT).show();
             }
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            Toast.makeText(this, "Shizuku error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
