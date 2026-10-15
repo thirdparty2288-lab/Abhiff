@@ -115,7 +115,6 @@ public class MainActivity extends Activity {
         List<ApplicationInfo> apps = pm.getInstalledApplications(PackageManager.GET_META_DATA);
         List<ApplicationInfo> userApps = new ArrayList<>();
         for (ApplicationInfo app : apps) {
-            // Sirf woh apps jo launch ho sakti hain (icons ke saath)
             if (pm.getLaunchIntentForPackage(app.packageName) != null) {
                 userApps.add(app);
             }
@@ -150,19 +149,16 @@ public class MainActivity extends Activity {
             return;
         }
 
-        // Auto RAM Clean
         if (settingsPrefs.getBoolean("auto_ram", true)) {
             try { Runtime.getRuntime().exec("am kill-all"); } catch (Exception e) {}
         }
 
-        // Auto Brightness
         if (settingsPrefs.getBoolean("auto_brightness", true)) {
             if (Settings.System.canWrite(this)) {
                 Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS, 255);
             }
         }
 
-        // Auto DND
         if (settingsPrefs.getBoolean("auto_dnd", true)) {
             NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             if (nm.isNotificationPolicyAccessGranted()) {
@@ -170,7 +166,6 @@ public class MainActivity extends Activity {
             }
         }
 
-        // Auto Start Side Panel
         if (Settings.canDrawOverlays(this)) {
             startService(new Intent(this, SidePanelService.class));
         }
@@ -219,4 +214,4 @@ public class MainActivity extends Activity {
 
         handler.postDelayed(this::updateStats, 3000);
     }
-            }
+                                              }
