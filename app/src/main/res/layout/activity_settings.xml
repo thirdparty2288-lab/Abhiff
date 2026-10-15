@@ -36,6 +36,7 @@
                 android:layout_marginLeft="12dp"/>
         </LinearLayout>
 
+        <!-- DANDI SETTINGS -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,76 +54,147 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Position"
-                android:textColor="#888888"
-                android:textSize="12sp"
-                android:layout_marginBottom="4dp"/>
-
-            <RadioGroup
-                android:id="@+id/rgPosition"
+            <!-- Position X -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="4dp">
 
-                <RadioButton
-                    android:id="@+id/rbLeft"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="LEFT"
+                    android:layout_weight="1"
+                    android:text="↔️ Position X (Left se)"
                     android:textColor="#FFFFFF"
-                    android:layout_marginRight="16dp"/>
+                    android:textSize="13sp"/>
 
-                <RadioButton
-                    android:id="@+id/rbRight"
+                <TextView
+                    android:id="@+id/tvPosX"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="RIGHT"
-                    android:textColor="#FFFFFF"/>
-            </RadioGroup>
+                    android:text="20"
+                    android:textColor="#00FF88"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <SeekBar
+                android:id="@+id/seekPosX"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Size"
-                android:textColor="#888888"
-                android:textSize="12sp"
-                android:layout_marginBottom="4dp"/>
+                android:max="200"
+                android:progress="20"
+                android:progressTint="#00FF88"
+                android:thumbTint="#00FF88"
+                android:layout_marginBottom="12dp"/>
 
-            <RadioGroup
-                android:id="@+id/rgSize"
+            <!-- Position Y -->
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="4dp">
 
-                <RadioButton
-                    android:id="@+id/rbSmall"
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="SMALL"
+                    android:layout_weight="1"
+                    android:text="↕️ Position Y (Top se)"
                     android:textColor="#FFFFFF"
-                    android:layout_marginRight="12dp"/>
+                    android:textSize="13sp"/>
 
-                <RadioButton
-                    android:id="@+id/rbMedium"
+                <TextView
+                    android:id="@+id/tvPosY"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MEDIUM"
+                    android:text="300"
+                    android:textColor="#00FF88"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/seekPosY"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="1000"
+                android:progress="300"
+                android:progressTint="#00FF88"
+                android:thumbTint="#00FF88"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Width -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Width (Patli/Moti)"
                     android:textColor="#FFFFFF"
-                    android:layout_marginRight="12dp"/>
+                    android:textSize="13sp"/>
 
-                <RadioButton
-                    android:id="@+id/rbLarge"
+                <TextView
+                    android:id="@+id/tvWidth"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="LARGE"
-                    android:textColor="#FFFFFF"/>
-            </RadioGroup>
+                    android:text="20"
+                    android:textColor="#00FF88"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
+            <SeekBar
+                android:id="@+id/seekWidth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="80"
+                android:progress="20"
+                android:progressTint="#00FF88"
+                android:thumbTint="#00FF88"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Height -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Height (Chhoti/Lambi)"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"/>
+
+                <TextView
+                    android:id="@+id/tvHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="200"
+                    android:textColor="#00FF88"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <SeekBar
+                android:id="@+id/seekHeight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="600"
+                android:progress="200"
+                android:progressTint="#00FF88"
+                android:thumbTint="#00FF88"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Color -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,10 +210,10 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/rbFire"
+                    android:id="@+id/rbGreen"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="FIRE"
+                    android:text="GREEN"
                     android:textColor="#FFFFFF"
                     android:layout_marginRight="12dp"/>
 
@@ -154,14 +226,15 @@
                     android:layout_marginRight="12dp"/>
 
                 <RadioButton
-                    android:id="@+id/rbGreen"
+                    android:id="@+id/rbFire"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="GREEN"
+                    android:text="FIRE"
                     android:textColor="#FFFFFF"/>
             </RadioGroup>
         </LinearLayout>
 
+        <!-- AUTO FEATURES -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -209,6 +282,17 @@
                 android:textColor="#FFFFFF"
                 android:textSize="13sp"
                 android:padding="12dp"
+                android:background="#222222"
+                android:layout_marginBottom="6dp"/>
+
+            <Switch
+                android:id="@+id/swGameFocus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🎮 Game Focus (Auto App Pin)"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp"
+                android:padding="12dp"
                 android:background="#222222"/>
         </LinearLayout>
 
@@ -216,7 +300,7 @@
             android:id="@+id/btnSaveSettings"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:text="SAVE SETTINGS"
+            android:text="💾 SAVE SETTINGS"
             android:background="#00FF88"
             android:textColor="#000000"
             android:textStyle="bold"
