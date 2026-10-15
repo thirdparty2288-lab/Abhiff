@@ -38,13 +38,13 @@ public class SidePanelService extends Service {
 
         handleView = LayoutInflater.from(this).inflate(R.layout.handle_layout, null);
         WindowManager.LayoutParams handleParams = new WindowManager.LayoutParams(
-            20, 300,
+            60, 300,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         );
         handleParams.gravity = Gravity.LEFT | Gravity.CENTER_VERTICAL;
-        handleParams.x = 30;
+        handleParams.x = 100;
 
         handleView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -157,7 +157,7 @@ public class SidePanelService extends Service {
                         }
                     }
                     final String pv = pingVal[0];
-                    handler.post(() -> ping.setText("Ping: " + pv + " ms"));
+                    handler.post(() -> ping.setText("📶 " + pv + " ms"));
                 } catch (Exception e) {}
             }).start();
 
@@ -165,12 +165,12 @@ public class SidePanelService extends Service {
             int level = bm.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY);
             Intent bi = registerReceiver(null, new android.content.IntentFilter(Intent.ACTION_BATTERY_CHANGED));
             int temp = bi.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
-            battery.setText("Battery: " + level + "% | Temp: " + (temp / 10.0f) + "°C");
+            battery.setText("🔋 " + level + "% | " + (temp / 10.0f) + "°C");
 
             android.app.ActivityManager am = (android.app.ActivityManager) getSystemService(ACTIVITY_SERVICE);
             android.app.ActivityManager.MemoryInfo mi = new android.app.ActivityManager.MemoryInfo();
             am.getMemoryInfo(mi);
-            ram.setText("RAM: " + ((mi.totalMem - mi.availMem) / (1024 * 1024)) + " MB used");
+            ram.setText("📊 " + ((mi.totalMem - mi.availMem) / (1024 * 1024)) + " MB");
         }
 
         handler.postDelayed(this::updateStats, 3000);
@@ -182,4 +182,4 @@ public class SidePanelService extends Service {
         if (handleView != null) windowManager.removeView(handleView);
         if (panelView != null) windowManager.removeView(panelView);
     }
-                              }
+                                                    }
