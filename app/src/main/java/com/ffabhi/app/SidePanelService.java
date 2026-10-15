@@ -3,6 +3,7 @@ package com.ffabhi.app;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.media.AudioManager;
 import android.os.BatteryManager;
@@ -21,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+
+import rikka.shizuku.Shizuku;
 
 public class SidePanelService extends Service {
 
@@ -231,15 +234,23 @@ public class SidePanelService extends Service {
 
     private void performRamClean() {
         try {
-            Runtime.getRuntime().exec("am kill-all");
-            Runtime.getRuntime().exec("pm trim-caches 999999999999");
+            if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+                Runtime.getRuntime().exec("am kill-all");
+                Runtime.getRuntime().exec("pm trim-caches 999999999999");
+            } else {
+                Runtime.getRuntime().exec("am kill-all");
+            }
         } catch (Exception e) {}
     }
 
     private void killBackgroundApps() {
         try {
-            Runtime.getRuntime().exec("am kill-all");
-            Runtime.getRuntime().exec("pm trim-caches 999999999999");
+            if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
+                Runtime.getRuntime().exec("am kill-all");
+                Runtime.getRuntime().exec("pm trim-caches 999999999999");
+            } else {
+                Runtime.getRuntime().exec("am kill-all");
+            }
         } catch (Exception e) {}
     }
 
@@ -293,4 +304,4 @@ public class SidePanelService extends Service {
         if (handleView != null) windowManager.removeView(handleView);
         if (panelView != null) windowManager.removeView(panelView);
     }
-    }
+            }
